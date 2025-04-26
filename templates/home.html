@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for post in posts%}  <!-- Note	that	object_list	comes from	ListView	and	contains	all	the	objects	in	our	view.-->
+        <div>
+            <h2 class="post"><a href="det/{{ post.id }}">{{ post.title }}</a></h2>
+            <p class="post">{{ post.body }}</p>
+            <br>
+            <hr>
+        </div>
+
+    {% endfor%}
+
+
+{% endblock content %}

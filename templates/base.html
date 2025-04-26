@@ -1,0 +1,19 @@
+{%	load	static	%}
+ <html>
+    <head>
+        <title>Django	blog</title>
+        <link	href="{%	static	'css/base.css'	%}"	rel="stylesheet">
+    </head>
+    <body>       
+        <div>
+            <header>
+                <div style="text-align: left;">
+                    <h1><a href="{% url 'home' %}">KBlog</a></h1>
+                </div>
+            </header>
+            
+            {% block content%}  <!-- content is a variable it can be any thing -->
+            {% endblock content %}
+        </div>
+    </body>
+</html>

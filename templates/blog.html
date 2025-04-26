@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Blog System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 50%;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+        }
+        input, textarea, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .post {
+            background: #fff;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 5px solid #28a745;
+            position: relative;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Blog</h1>
+        <input type="text" id="title" placeholder="Post Title">
+        <textarea id="content" placeholder="Write your post..."></textarea>
+        <button onclick="addPost()">Add Post</button>
+        <div id="posts"></div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", loadPosts);
+
+        function addPost() {
+            const title = document.getElementById("title").value;
+            const content = document.getElementById("content").value;
+            if (title === "" || content === "") {
+                alert("Please fill in both fields");
+                return;
+            }
+            
+            const post = { title, content };
+            let posts = JSON.parse(localStorage.getItem("posts")) || [];
+            posts.push(post);
+            localStorage.setItem("posts", JSON.stringify(posts));
+            loadPosts();
+            document.getElementById("title").value = "";
+            document.getElementById("content").value = "";
+        }
+
+        function loadPosts() {
+            const postsDiv = document.getElementById("posts");
+            postsDiv.innerHTML = "";
+            const posts = JSON.parse(localStorage.getItem("posts")) || [];
+            posts.forEach((post, index) => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("post");
+                postElement.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                    <button class="delete-btn" onclick="deletePost(${index})">Delete</button>
+                `;
+                postsDiv.appendChild(postElement);
+            });
+        }
+
+        function deletePost(index) {
+            let posts = JSON.parse(localStorage.getItem("posts"));
+            posts.splice(index, 1);
+            localStorage.setItem("posts", JSON.stringify(posts));
+            loadPosts();
+        }
+    </script>
+</body>
+</html>
