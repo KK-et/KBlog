@@ -32,7 +32,7 @@ DEBUG = config('DEBUG', cast=bool)
     cast=lambda v: [s.strip() for s in v.split(',')],
     default=''
 )"""
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["kblog.onrender.com"]
 
 # Application definition
 
